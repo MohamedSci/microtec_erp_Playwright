@@ -1,0 +1,20 @@
+{
+  "name": "playwright_erp_microtec",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@playwright/test": "^1.44.1",
+    "@types/node": "^20.14.5",
+    "dotenv": "^16.4.5",
+    "playwright": "^1.44.1",
+    "playwright-test": "^14.1.3",
+    "typescript": "^5.4.5"
+  }
+}
