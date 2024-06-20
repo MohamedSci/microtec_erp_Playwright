@@ -8,6 +8,7 @@ async function clickContinueAs(page: Page) {
         console.log("Continue As Button is not visible");
     }
 }
+
 // Playwright equivalent
 async function getCountOfCardsinGrid(page: Page, parentElement: string, gridElement: string) {
     await page.waitForSelector(parentElement);
@@ -15,6 +16,7 @@ async function getCountOfCardsinGrid(page: Page, parentElement: string, gridElem
     const domainAppCountsInit = gridElements.length;
     return domainAppCountsInit;
 }
+
 // Playwright equivalent for findAppCardAndValidate with null handling
 async function findAppCardAndValidate(page: Page, subdomain: string, expectedPrice: any) {
     const gridElements = await page.$$('div.data_body div.grid');
@@ -81,6 +83,7 @@ async function scrollToLastElement(page: Page) {
     const tableRows = await page.$$('table tbody tr');
     await tableRows[tableRows.length - 1].scrollIntoViewIfNeeded();
 }
+
 async function verifyCorrectColumnsHeaders(page: Page, expectedHeaders: string[]) {
     const tableHeaders = await page.$$('table th');
     for (let i = 0; i < tableHeaders.length; i++) {
@@ -88,6 +91,7 @@ async function verifyCorrectColumnsHeaders(page: Page, expectedHeaders: string[]
         expect(text.trim()).toEqual(expectedHeaders[i].trim());
     }
 }
+
 async function getLastCellInTableValue(page: Page, col: number) {
     const tableRows = await page.$$('table tbody tr');
     if (tableRows.length > 0) {
@@ -110,6 +114,7 @@ async function verifyALastCellInTable(page: Page, col: number, txt: string) {
     const cellText = await cells[col].innerText();
     expect(cellText.trim()).toContain(txt);
 }
+
 async function verifyText(page: Page, index: number, str: string) {
     const input = await page.$$('input[type="text"]');
     const value = await input[index].inputValue();
@@ -153,8 +158,6 @@ async function logOut(page: Page) {
         console.log("Element is not visible");
     }
 }
-
-// import { Page, expect } from '@playwright/test';
 
 async function validateTableHeaders(page: Page, headerSelector: string, expectedHeaders: string[]) {
     const headers = await page.$$eval(headerSelector, els => els.map(el => el.textContent?.trim() || ''));
@@ -240,11 +243,6 @@ async function loginSession(page: Page) {
     await page.waitForURL('**/bussinessowners');
 }
 
-// Export the function for use in tests
-export { loginSession };
-
-
-
 
 async function saveLocalStorageToFile(page: Page, filename: string) {
     const data = await page.evaluate(() => {
@@ -281,13 +279,21 @@ async function getLoginResponse(page: Page): Promise<LoginResponse | null> {
     return storedLoginResponse;
 }
 
-export { getLoginResponse };
 
 
 
 async function checkImageVisibilityBySrc(page: Page, imgSrc: string) {
     await page.waitForSelector(`img[src='${imgSrc}']`, { state: 'visible' });
 }
+export {checkRegExCompatibility}
+export {
+    clickContinueAs, getCountOfCardsinGrid, findAppCardAndValidate, displayingInvalidEmailMessage
+    , displayingRequiredMessage, increaseScreenItemsCountToHundred, navigateToTheLatestScreen,
+    scrollToElement, scrollToLastElement, verifyCorrectColumnsHeaders, getLastCellInTableValue,
+    verifyALastCellInTable, verifyText, inputText, visibilityOfRequiredStar,
+    logOut, validateTableHeaders, validateRequiredComponents, VerifyTableVisibility, setLocalStorage,
+    loginSession, saveLocalStorageToFile, getAllItemsCount, getLoginResponse, checkImageVisibilityBySrc
+};
 
 
 

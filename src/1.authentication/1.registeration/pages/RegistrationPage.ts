@@ -1,6 +1,8 @@
 import { Page } from 'playwright';
 import { expect } from 'playwright/test';
 import { AuthData } from '../../data/auth_data';
+import { checkRegExCompatibility } from '../../utils/playwrightUtils.ts';
+import { checkRegExInCompatibility } from '../../utils/playwrightUtils.ts';
 
 export class RegistrationPage {
   static async visit(page: Page) {
@@ -145,6 +147,30 @@ export class RegistrationPage {
     await expect(star).toBeVisible();
   }
 
+  static async verifyPasswordAndConfirmPasswordEquality(page: Page) {
+    const passwordValue = await page.locator('input[name="password"]').inputValue();
+    await expect(page.locator('input[name="confirmPassword"]')).toHaveValue(passwordValue);
+  }
+
+  static async validatePassordAndConfirmPasswordDifference(page: Page) {
+    await expect(page.locator('span#inputConfirmPassword-error')).toBeVisible();
+    await expect(page.locator(`text=${AuthData.diffPassMsg}`)).toBeVisible();
+  }
+  static async verifyPasswordCompatibility(page: Page) {
+    await checkRegExCompatibility(page, 'input[name="password"]', AuthData.correctPassword, AuthData.passwordRegex);
+    await checkRegExInCompatibility(page, 'input[name="password"]', AuthData.inCorrectPass1, AuthData.passwordRegex);
+    await checkRegExInCompatibility(page, 'input[name="password"]', AuthData.inCorrectPass2, AuthData.passwordRegex);
+    await checkRegExInCompatibility(page, 'input[name="password"]', AuthData.inCorrectPass3, AuthData.passwordRegex);
+    await checkRegExInCompatibility(page, 'input[name="password"]', AuthData.inCorrectPass4, AuthData.passwordRegex);
+    await checkRegExInCompatibility(page, 'input[name="password"]', AuthData.inCorrectPass5, AuthData.passwordRegex);
+    await checkRegExInCompatibility(page, 'input[name="password"]', AuthData.inCorrectPass6, AuthData.passwordRegex);
+  }
+//     static async checkRegExCompatibility(page: Page, selector: string, value: string, regex: RegExp) {
+// //     // Implement your logic to check regex compatibility
+//   }
+//     static async checkRegExInCompatibility(page: Page, selector: string, value: string, regex: RegExp) {
+//     // Implement your logic to check regex incompatibility
+//   }
   static async implementNormalRegSteps(page: Page, mail: string, phone: string) {
     await this.typeFullName(page, AuthData.fullName);
     await this.inputEmail(page, mail);
@@ -586,15 +612,15 @@ export class RegistrationPage {
 //     await this.checkRegExInCompatibility(page, 'input[name="password"]', AuthData.inCorrectPass6, AuthData.passwordRegex);
 //   }
 
-//   static async verifyPasswordAndConfirmPasswordEquality(page: Page) {
-//     const passwordValue = await page.locator('input[name="password"]').inputValue();
-//     await expect(page.locator('input[name="confirmPassword"]')).toHaveValue(passwordValue);
-//   }
+  // static async verifyPasswordAndConfirmPasswordEquality(page: Page) {
+  //   const passwordValue = await page.locator('input[name="password"]').inputValue();
+  //   await expect(page.locator('input[name="confirmPassword"]')).toHaveValue(passwordValue);
+  // }
 
-//   static async validatePassordAndConfirmPasswordDifference(page: Page) {
-//     await expect(page.locator('span#inputConfirmPassword-error')).toBeVisible();
-//     await expect(page.locator(`text=${AuthData.diffPassMsg}`)).toBeVisible();
-//   }
+  // static async validatePassordAndConfirmPasswordDifference(page: Page) {
+  //   await expect(page.locator('span#inputConfirmPassword-error')).toBeVisible();
+  //   await expect(page.locator(`text=${AuthData.diffPassMsg}`)).toBeVisible();
+  // }
 
 //   static async verifyEncryptedPassword(page: Page, passSelector: string) {
 //     await page.locator(passSelector).fill(AuthData.pass);
