@@ -1,4 +1,4 @@
-import { Page } from '@playwright/test';
+import { Page } from "playwright";
 
 export async function clearCookies(page: Page) {
     const context = page.context();
