@@ -1,4 +1,5 @@
-import { Page, expect } from '@playwright/test';
+import { Page } from 'playwright';
+import { expect } from 'playwright/test';
 import { AuthData } from '../../data/auth_data';
 
 export class RegistrationPage {
@@ -7,7 +8,7 @@ export class RegistrationPage {
   }
 
   static async clickLangButton(page: Page) {
-    await page.locator('a.lang-btn').click();
+    await page.locator('a.lang-btn').nth(-1).click();
   }
 
   static async getPageHeader(page: Page, head: string) {
@@ -167,7 +168,7 @@ export class RegistrationPage {
 //   }
 
 //   static async clickLangButton(page: Page) {
-//     await page.locator('a.lang-btn').click();
+//     await page.locator('a.lang-btn').nth(-1).click();
 //   }
 
 //   static async getPageHeader(page: Page, head: string) {
@@ -319,7 +320,7 @@ export class RegistrationPage {
 //   }
 
 //   static async clickLangButton(page: Page) {
-//     await page.locator('a.lang-btn').click();
+//     await page.locator('a.lang-btn').nth(-1).click();
 //   }
 
 //   static async getPageHeader(page: Page, head: string) {

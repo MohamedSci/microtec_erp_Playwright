@@ -1,6 +1,3 @@
-import { Page } from "playwright";
-import { expect } from "playwright/test";
-
 // Playwright equivalent
 async function clickContinueAs(page: Page) {
     const buttonSelector = 'button.custom-btn.w-75.text-center.my-4';
@@ -201,6 +198,8 @@ async function setLocalStorage(page: Page, key: string, value: string) {
 
 // Load environment variables from .env file
 import { config } from 'dotenv';
+import { Page } from 'playwright';
+import { expect } from 'playwright/test';
 config();
 
 // Define your variables with optional chaining and nullish coalescing

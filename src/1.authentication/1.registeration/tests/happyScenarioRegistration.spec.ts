@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import test from 'playwright/test';
 import { generateRandomEmail, generateRandomMobileNumber } from '../../../../utils/utils';
 import { RegistrationPage } from '../pages/RegistrationPage';
 

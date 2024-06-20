@@ -19,7 +19,7 @@ export class AuthData {
     static inCorrectPass5 = "1234567!";
     static inCorrectPass6 = "/*----====!";
     static diffPassMsg = "تأكد من تطابق كلمتي المرور";
-    static code = "20";
+    static code = "EG (+20)";
     static country = "Egy";
     static phone = "01122399999";
     static face_img = "/assets/img/login/social_icon_facebook.webp";
