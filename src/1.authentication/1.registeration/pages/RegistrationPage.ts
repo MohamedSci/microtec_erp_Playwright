@@ -157,6 +157,27 @@ export class RegistrationPage {
     await this.confirmCheckBox(page);
     await this.clickRegistrationButton(page);
   }
+
+  static async checkIsRequiredMsg(page: Page, el: string, isEn: boolean) {
+
+    const message = isEn ? 'Field is required' : 'هذا الحقل مطلوب';
+  
+    // Clear the element and trigger the required message
+    await page.locator(el).clear(); // Ensures consistent behavior across browsers
+    await page.locator(el).fill(''); // Ensures consistent behavior across browsers
+
+    // Wait for the required message to appear (optional)
+    await page.waitForSelector(`span:text-contains("${message}")`, { state: 'visible' }); // Adjust selector if needed
+  
+    // Assert that the required message is visible
+    await expect(page.locator(`span:text-contains("${message}")`)).toBeVisible();
+  
+    // Clear the element again (optional)
+    await page.locator(el).clear(); // Ensures element is ready for further testing
+    await page.locator(el).fill(''); // Ensures element is ready for further testing
+  }
+  
+
 }
 
 // import { Page, expect } from '@playwright/test';
