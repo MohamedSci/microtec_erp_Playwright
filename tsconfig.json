@@ -1,13 +1,23 @@
 {
     "compilerOptions": {
-      "target": "es6",
-      "module": "commonjs",
-      "strict": true,
-      "esModuleInterop": true,
+      "target": "esnext", // Adjust based on your project's requirements
+      "module": "commonjs", // Or "esnext" for modern module systems
+      "lib": ["dom", "dom.iterable", "esnext"], // Adjust based on your project's dependencies
+      "esModuleInterop": true, // Ensures compatibility between CommonJS and ES modules
+      "allowJs": true,
+      // "target": "es6",
+      // "module": "commonjs",
+      // "strict": true,
+      // "esModuleInterop": true,
       "skipLibCheck": true,
       "forceConsistentCasingInFileNames": true,
       "types": ["node"],
-      "typeRoots": ["./node_modules/@types"]
+      "typeRoots": ["./node_modules/@types"],
+      "baseUrl": "./src", // Assuming your source code is in a "src" folder
+      "paths": {
+        "utils/*": ["../utils/*"], // Maps all imports from "utils" to "../utils"
+        "components/*": ["components/*"] // Maps all imports from "components" directly
+      }
     },
     "include": [
       "src/**/*.ts"

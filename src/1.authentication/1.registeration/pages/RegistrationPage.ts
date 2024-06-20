@@ -165,12 +165,12 @@ export class RegistrationPage {
     await checkRegExInCompatibility(page, 'input[name="password"]', AuthData.inCorrectPass5, AuthData.passwordRegex);
     await checkRegExInCompatibility(page, 'input[name="password"]', AuthData.inCorrectPass6, AuthData.passwordRegex);
   }
-//     static async checkRegExCompatibility(page: Page, selector: string, value: string, regex: RegExp) {
-// //     // Implement your logic to check regex compatibility
-//   }
-//     static async checkRegExInCompatibility(page: Page, selector: string, value: string, regex: RegExp) {
-//     // Implement your logic to check regex incompatibility
-//   }
+  //     static async checkRegExCompatibility(page: Page, selector: string, value: string, regex: RegExp) {
+  // //     // Implement your logic to check regex compatibility
+  //   }
+  //     static async checkRegExInCompatibility(page: Page, selector: string, value: string, regex: RegExp) {
+  //     // Implement your logic to check regex incompatibility
+  //   }
   static async implementNormalRegSteps(page: Page, mail: string, phone: string) {
     await this.typeFullName(page, AuthData.fullName);
     await this.inputEmail(page, mail);
@@ -185,24 +185,24 @@ export class RegistrationPage {
   }
 
   static async checkIsRequiredMsg(page: Page, el: string, isEn: boolean) {
-
+    // span#FullName-error
+    // span#email-error
+    // span#dropDownCountry-error
+    // span#inputPassword-error
+    // span#inputConfirmPassword-error
     const message = isEn ? 'Field is required' : 'هذا الحقل مطلوب';
-  
     // Clear the element and trigger the required message
     await page.locator(el).clear(); // Ensures consistent behavior across browsers
     await page.locator(el).fill(''); // Ensures consistent behavior across browsers
-
     // Wait for the required message to appear (optional)
     await page.waitForSelector(`span:text-contains("${message}")`, { state: 'visible' }); // Adjust selector if needed
-  
     // Assert that the required message is visible
     await expect(page.locator(`span:text-contains("${message}")`)).toBeVisible();
-  
     // Clear the element again (optional)
     await page.locator(el).clear(); // Ensures element is ready for further testing
     await page.locator(el).fill(''); // Ensures element is ready for further testing
   }
-  
+
 
 }
 
@@ -612,15 +612,15 @@ export class RegistrationPage {
 //     await this.checkRegExInCompatibility(page, 'input[name="password"]', AuthData.inCorrectPass6, AuthData.passwordRegex);
 //   }
 
-  // static async verifyPasswordAndConfirmPasswordEquality(page: Page) {
-  //   const passwordValue = await page.locator('input[name="password"]').inputValue();
-  //   await expect(page.locator('input[name="confirmPassword"]')).toHaveValue(passwordValue);
-  // }
+// static async verifyPasswordAndConfirmPasswordEquality(page: Page) {
+//   const passwordValue = await page.locator('input[name="password"]').inputValue();
+//   await expect(page.locator('input[name="confirmPassword"]')).toHaveValue(passwordValue);
+// }
 
-  // static async validatePassordAndConfirmPasswordDifference(page: Page) {
-  //   await expect(page.locator('span#inputConfirmPassword-error')).toBeVisible();
-  //   await expect(page.locator(`text=${AuthData.diffPassMsg}`)).toBeVisible();
-  // }
+// static async validatePassordAndConfirmPasswordDifference(page: Page) {
+//   await expect(page.locator('span#inputConfirmPassword-error')).toBeVisible();
+//   await expect(page.locator(`text=${AuthData.diffPassMsg}`)).toBeVisible();
+// }
 
 //   static async verifyEncryptedPassword(page: Page, passSelector: string) {
 //     await page.locator(passSelector).fill(AuthData.pass);
