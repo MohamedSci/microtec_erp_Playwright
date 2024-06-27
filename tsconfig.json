@@ -5,10 +5,6 @@
       "lib": ["dom", "dom.iterable", "esnext"], // Adjust based on your project's dependencies
       "esModuleInterop": true, // Ensures compatibility between CommonJS and ES modules
       "allowJs": true,
-      // "target": "es6",
-      // "module": "commonjs",
-      // "strict": true,
-      // "esModuleInterop": true,
       "skipLibCheck": true,
       "forceConsistentCasingInFileNames": true,
       "types": ["node"],
