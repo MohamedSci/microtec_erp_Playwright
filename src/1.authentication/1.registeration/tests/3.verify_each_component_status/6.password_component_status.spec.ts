@@ -8,8 +8,6 @@ import { AuthData } from "../../../data/auth_data";
 
 test.describe('Verify Password component Status on the Registerion page', () => {
 
-
-
   test.beforeEach(async ({page}) => {
     await RegistrationPage.visit(page);
   });
