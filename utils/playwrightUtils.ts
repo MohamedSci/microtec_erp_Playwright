@@ -9,7 +9,34 @@ export async function clickContinueAs(page: Page) {
     }
 }
 
-// 
+// export async function checkRegExInCompatibility(page: Page, fieldSelector: string, inputStr: string, regEx: RegExp) {
+//   await page.locator(fieldSelector).fill(''); // Clear the field
+//   await page.locator(fieldSelector).fill(inputStr);
+//   const value = await page.locator(fieldSelector).evaluate((el) => el.value);
+//   expect(value).not.toMatch(regEx);
+// }
+export async function checkRegExInCompatibility(page: Page, fieldSelector: string, inputStr: string, regEx: RegExp) {
+    await page.locator(fieldSelector).fill('');
+    await page.locator(fieldSelector).fill(inputStr);
+
+    const element = await page.locator(fieldSelector);
+    const value = typeof element === 'object' && 'value' in element ? element.value : '';
+
+    expect(value).not.toMatch(regEx);
+}
+
+
+async function checkRegExCompatibility(page: Page, fieldSelector: string, inputStr: string, regEx: RegExp) {
+    await page.locator(fieldSelector).fill('');
+    await page.locator(fieldSelector).fill(inputStr);
+
+    const element = await page.locator(fieldSelector);
+    const value = typeof element === 'object' && 'value' in element ? element.value : '';
+
+    expect(value).toMatch(regEx);
+}
+
+
 export async function getCountOfCardsinGrid(page: Page, parentElement: string, gridElement: string) {
     await page.waitForSelector(parentElement);
     const gridElements = await page.$$(gridElement);
@@ -123,16 +150,6 @@ export async function verifyText(page: Page, index: number, str: string) {
 export async function inputText(page: Page, index: number, str: string) {
     const input = await page.$$('input[type="text"]');
     await input[index].fill(str);
-}
-
-
-export async function checkRegExCompatibility(page: Page, fieldSelector: string, inputStr: string, regEx: RegExp) {
-    await page.fill(fieldSelector, inputStr);
-    const val = await page.$eval(fieldSelector, (el) => {
-        const inputElement = el as HTMLInputElement;
-        return inputElement.value;
-    });
-    expect(val).toMatch(regEx);
 }
 
 
@@ -281,15 +298,7 @@ export async function getLoginResponse(page: Page): Promise<LoginResponse | null
 export async function checkImageVisibilityBySrc(page: Page, imgSrc: string) {
     await page.waitForSelector(`img[src='${imgSrc}']`, { state: 'visible' });
 }
-// export {checkRegExCompatibility}
-// export {
-//     clickContinueAs, getCountOfCardsinGrid, findAppCardAndValidate, displayingInvalidEmailMessage
-//     , displayingRequiredMessage, increaseScreenItemsCountToHundred, navigateToTheLatestScreen,
-//     scrollToElement, scrollToLastElement, verifyCorrectColumnsHeaders, getLastCellInTableValue,
-//     verifyALastCellInTable, verifyText, inputText, visibilityOfRequiredStar,
-//     logOut, validateTableHeaders, validateRequiredComponents, VerifyTableVisibility, setLocalStorage,
-//     loginSession, saveLocalStorageToFile, getAllItemsCount, getLoginResponse, checkImageVisibilityBySrc
-// };
+
 
 
 

@@ -155,7 +155,7 @@ export class RegistrationPage {
     await expect(page.locator(`text=${AuthData.diffPassMsg}`)).toBeVisible();
   }
   static async verifyPasswordCompatibility(page: Page) {
-    await checkRegExCompatibility(page, 'input[name="password"]', AuthData.correctPassword, AuthData.passwordRegex);
+    await checkRegExInCompatibility(page, 'input[name="password"]', AuthData.correctPassword, AuthData.passwordRegex);
     await checkRegExInCompatibility(page, 'input[name="password"]', AuthData.inCorrectPass1, AuthData.passwordRegex);
     await checkRegExInCompatibility(page, 'input[name="password"]', AuthData.inCorrectPass2, AuthData.passwordRegex);
     await checkRegExInCompatibility(page, 'input[name="password"]', AuthData.inCorrectPass3, AuthData.passwordRegex);
@@ -177,11 +177,6 @@ export class RegistrationPage {
   }
 
   static async checkIsRequiredMsg(page: Page, el: string, isEn: boolean) {
-    // span#FullName-error
-    // span#email-error
-    // span#dropDownCountry-error
-    // span#inputPassword-error
-    // span#inputConfirmPassword-error
     const message = isEn ? 'Field is required' : 'هذا الحقل مطلوب';
     // Clear the element and trigger the required message
     await page.locator(el).clear(); // Ensures consistent behavior across browsers
@@ -194,6 +189,9 @@ export class RegistrationPage {
     await page.locator(el).clear(); // Ensures element is ready for further testing
     await page.locator(el).fill(''); // Ensures element is ready for further testing
   }
-
-
 }
+
+function checkRegExInCompatibility(page: Page, arg1: string, inCorrectPass3: string, passwordRegex: RegExp) {
+  throw new Error('Function not implemented.');
+}
+
