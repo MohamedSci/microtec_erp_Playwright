@@ -133,14 +133,26 @@ export async function getLastCellInTableValue(page: Page, col: number) {
     }
 }
 
-export async function verifyALastCellInTable(page: Page, col: number, txt: string) {
-    const tableRows = await page.$$('table tbody tr');
-    const lastRow = tableRows[tableRows.length - 1];
-    const cells = await lastRow.$$('td');
-    const cellText = await cells[col].innerText();
-    expect(cellText.trim()).toContain(txt);
-}
 
+
+async function verifyLastCellInTable(page: Page, index: number, txt: string) {
+    const tableBody = await page.locator('table tbody');
+    if (await tableBody.count() > 0) {
+      const tableRow = tableBody.locator('tr').last();
+      const cell = tableRow.locator('td').nth(index);
+  
+      if (!(await cell.isVisible())) {
+        // Scroll the element into view using evaluate
+        await tableRow.evaluate((el) => el.scrollIntoView({ behavior: 'smooth', block: 'nearest' }));
+      }
+      await expect(cell).toContainText(txt);
+    } else {
+      console.log('Row is not visible');
+    }
+  }
+  
+  
+  
 export async function verifyText(page: Page, index: number, str: string) {
     const input = await page.$$('input[type="text"]');
     const value = await input[index].inputValue();
@@ -264,11 +276,14 @@ export async function saveLocalStorageToFile(page: Page, filename: string) {
     // Use a Playwright task or similar approach to write data to a file
     // Example: await page.evaluate(...) and then use Node.js fs module to write to a file
 }
-export async function getAllItemsCount(page: Page, gridSelector: string, itemSelector: string) {
+
+export async function getAllItemsCount(page: Page, gridSelector: string, itemSelector: string): Promise<number> {
     await page.waitForSelector(gridSelector, { state: 'attached' });
     await page.waitForSelector(itemSelector, { state: 'attached' });
+
     const items = await page.$$(itemSelector);
     await items[items.length - 1].scrollIntoViewIfNeeded();
+
     return items.length;
 }
 
