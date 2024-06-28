@@ -135,13 +135,13 @@ export class ManageApps {
 
   static async clickLastSubDomainManageApp(page: Page) {
     const manageAppButton = page
-  .locator('div[class="col-12 md:col-6"]')
-  .last()
-  .locator("button", { hasText: /manage app/i })
-  .last();
+      .locator('div[class="col-12 md:col-6"]')
+      .last()
+      .locator("button", { hasText: /manage app/i })
+      .last();
 
-await manageAppButton.scrollIntoViewIfNeeded();
-await manageAppButton.click();
+    await manageAppButton.scrollIntoViewIfNeeded();
+    await manageAppButton.click();
 
   }
 
@@ -247,4 +247,15 @@ await manageAppButton.click();
   static async confirmDeleteButton(page: Page) {
     await page.locator('button.swal2-confirm.swal2-styled.swal2-default-outline').click();
   }
+
+
+  static async confirmOperationFailedDuplicatedAppsOnASubDomain(page: Page) {
+    await expect(page.locator('h2', { hasText: 'Operation Fail' })).toBeVisible();
+    await expect(page.locator('div#swal2-html-container', { hasText: 'FluentValidation' })).toBeVisible();
+    await expect(page.locator('span.swal2-x-mark')).toBeVisible();
+    await expect(page.locator('.swal2-x-mark-line-right')).toBeVisible();
+    await page.locator('button.swal2-confirm.swal2-styled').click();
+  }
+
+
 }
