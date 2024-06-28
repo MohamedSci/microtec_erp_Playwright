@@ -3,7 +3,9 @@ import test, { expect } from 'playwright/test';
 import { trimText } from 'utils/utils';
 import { SubDomainData } from '../../data/sub_domain_data';
 import { ManageApps } from '../pages/manage_apps';
-import { LoginPage } from 'lo';
+import { LoginPage } from '1.authentication/2.login/pages/loginPage';
+import { MySubscriptionsPage } from '2.bussiness_owners/1.my-subscriptions/1.my_subscriptions_page/pages/my-subscriptions_page';
+import { AddDomainSpace } from '2.bussiness_owners/1.my-subscriptions/2.add_domain_space/pages/add_domain_space';
 let appIndex = 0;
 
 test.describe('Manage Apps', () => {
