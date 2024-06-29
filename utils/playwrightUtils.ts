@@ -135,7 +135,7 @@ export async function getLastCellInTableValue(page: Page, col: number) {
 
 
 
-async function verifyLastCellInTable(page: Page, index: number, txt: string) {
+export async function verifyLastCellInTable(page: Page, index: number, txt: string) {
     const tableBody = await page.locator('table tbody');
     if (await tableBody.count() > 0) {
       const tableRow = tableBody.locator('tr').last();
