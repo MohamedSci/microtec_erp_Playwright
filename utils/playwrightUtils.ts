@@ -133,26 +133,70 @@ export async function getLastCellInTableValue(page: Page, col: number) {
     }
 }
 
+export async function getCountOfDetailAccount(page: Page): Promise<number> {
+    // Wait for the tree nodes to be visible
+    const treeNodeElements = await page.$$('p-treenode');
+    if (treeNodeElements.length > 0) {
+        // Scroll to the last 'file' span element
+        await treeNodeElements[treeNodeElements.length - 1].scrollIntoViewIfNeeded();
+        // Get the count of 'file' span elements
+        const fileElements = await page.$$('span.file');
+        return fileElements.length;
+    } else {
+        throw new Error('Tree nodes not visible or not found.');
+    }
+}
 
+export async function getCountOfParentAccount(page: Page): Promise<number> {
+    // Wait for the tree nodes to be visible
+    const treeNodeElements = await page.$$('p-treenode');
+    if (treeNodeElements.length > 0) {
+        // Scroll to the last 'folder' span element
+        await treeNodeElements[treeNodeElements.length - 1].scrollIntoViewIfNeeded();
+        // Get the count of 'folder' span elements
+        const folderElements = await page.$$('span.folder');
+        return folderElements.length;
+    } else {
+        throw new Error('Tree nodes not visible or not found.');
+    }
+}
+
+export async function getLastItemInDropDownList(page: Page): Promise<string> {
+    // Click on the dropdown trigger icon
+    await page.click('.p-dropdown-trigger-icon');
+    // Wait for the listbox to appear
+    const listbox = await page.waitForSelector('ul[role="listbox"]');
+    // Check if dropdown items are visible
+    const items = await listbox.$$('p-dropdownitem li span');
+    if (items.length > 0) {
+        // Scroll to the last visible item
+        await items[items.length - 1].scrollIntoViewIfNeeded();
+        // Get the text of the last item
+        const lastParentAccountCode = await items[items.length - 1].innerText();
+        return lastParentAccountCode.trim();
+    } else {
+        throw new Error('Dropdown items not visible or not found.');
+    }
+}
 
 export async function verifyLastCellInTable(page: Page, index: number, txt: string) {
     const tableBody = await page.locator('table tbody');
     if (await tableBody.count() > 0) {
-      const tableRow = tableBody.locator('tr').last();
-      const cell = tableRow.locator('td').nth(index);
-  
-      if (!(await cell.isVisible())) {
-        // Scroll the element into view using evaluate
-        await tableRow.evaluate((el) => el.scrollIntoView({ behavior: 'smooth', block: 'nearest' }));
-      }
-      await expect(cell).toContainText(txt);
+        const tableRow = tableBody.locator('tr').last();
+        const cell = tableRow.locator('td').nth(index);
+
+        if (!(await cell.isVisible())) {
+            // Scroll the element into view using evaluate
+            await tableRow.evaluate((el) => el.scrollIntoView({ behavior: 'smooth', block: 'nearest' }));
+        }
+        await expect(cell).toContainText(txt);
     } else {
-      console.log('Row is not visible');
+        console.log('Row is not visible');
     }
-  }
-  
-  
-  
+}
+
+
+
 export async function verifyText(page: Page, index: number, str: string) {
     const input = await page.$$('input[type="text"]');
     const value = await input[index].inputValue();
