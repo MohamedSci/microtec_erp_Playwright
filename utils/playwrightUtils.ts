@@ -195,6 +195,60 @@ export async function verifyLastCellInTable(page: Page, index: number, txt: stri
     }
 }
 
+export async function verifySliderButtonOnTheBottom(page: Page) {
+    await this.page.locator(':nth-child(2) > app-layout-page.ng-star-inserted > [dir="ltr"] > .Layout > app-layout-sidebar > .sidebar > .logo-details > .pi').expect({ state: 'visible' });
+    await this.page.locator(':nth-child(2) > app-layout-page.ng-star-inserted > [dir="ltr"] > .Layout > app-layout-sidebar > .sidebar > .logo-details > .pi').expect('class').toContain('pi-angle-right');
+}
+
+export async function verifyMenuItemIcon(page: Page) {
+    await this.page.locator('.p-menuitem-icon').expect({ state: 'visible' });
+}
+
+export async function verifyMenuItemText(txt: string) {
+    await this.page.locator('.p-menuitem-text').expect({ state: 'visible' });
+    const textContent = await this.page.locator('.p-menuitem-text').textContent();
+    expect(textContent).toContain(txt);
+}
+
+export async function verifyHeaderSearchTextField(page: Page) {
+    await this.page.locator('.p-input-icon-left > .p-inputtext').expect({ state: 'visible' });
+    await this.page.locator('.p-input-icon-left > .p-inputtext').expect({ state: 'enabled' });
+}
+
+export async function verifyAppNameInMenuItem(txt: string) {
+    await this.page.locator(':nth-child(2) > app-layout-page.ng-star-inserted > [dir="ltr"] > app-layout-header > nav > .card > .header_bussiness > .header_content > p-menubar.p-element > .p-menubar > .p-menubar-start > .start_nav > .modules > .btn_mod_select').expect({ state: 'visible' });
+    const textContent = await this.page.locator(':nth-child(2) > app-layout-page.ng-star-inserted > [dir="ltr"] > app-layout-header > nav > .card > .header_bussiness > .header_content > p-menubar.p-element > .p-menubar > .p-menubar-start > .start_nav > .modules > .btn_mod_select').textContent();
+    expect(textContent).toContain(txt);
+}
+
+export async function verifyAddNewButtonOnTheScreenTop(page: Page) {
+    await this.page.locator('.add_new').expect({ state: 'visible' });
+    await this.page.locator('.add_new').expect({ state: 'enabled' });
+    const buttonText = await this.page.locator('.add_new').textContent();
+    expect(buttonText.toLowerCase()).toContain('add new');
+}
+
+export async function verifyExportButtonOnTheScreenTop(page: Page) {
+    await this.page.locator('.export').expect({ state: 'visible' });
+    await this.page.locator('.export').expect({ state: 'enabled' });
+    const buttonText = await this.page.locator('.export').textContent();
+    expect(buttonText.trim()).toBe('Export');
+}
+
+export async function verifyPaginatorOnScreenBottom(page: Page) {
+    await this.page.locator('.p-paginator').scrollIntoView();
+    await this.page.locator('.p-paginator').expect({ state: 'visible' });
+    await this.page.locator('.p-highlight').expect({ state: 'visible' });
+    await this.page.locator('.p-highlight').expect({ state: 'enabled' });
+    await this.page.locator('.p-dropdown-trigger').expect({ state: 'visible' });
+    await this.page.locator('.p-paginator-last > .p-element > .p-icon').expect({ state: 'visible' });
+    await this.page.locator('.p-paginator-next > .p-element > .p-icon').expect({ state: 'visible' });
+    await this.page.locator('[aria-label="1"]').expect({ state: 'visible' });
+    await this.page.locator('[aria-label="1"]').expect({ state: 'enabled' });
+}
+
+
+
 
 
 export async function verifyText(page: Page, index: number, str: string) {

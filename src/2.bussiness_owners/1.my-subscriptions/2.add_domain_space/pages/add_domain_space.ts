@@ -1,5 +1,5 @@
 import { Page, expect } from 'playwright/test';
-import { BussinessOwnerFunction, calculateExpiryDate } from 'utils/utils';
+import {  calculateExpiryDate, getExpiryDate } from 'utils/utils';
 
 export class AddDomainSpace {
 
@@ -60,7 +60,7 @@ export class AddDomainSpace {
     static async validateAddedSubdomain(page: Page, subDomain: any) {
         await expect(page.locator(':nth-child(3) > .card_header > .supdomain')).toContainText(subDomain);
         const expiryDate = await page.locator(':nth-child(3) > .card_header > .date > .expire_date').textContent();
-        await expect(expiryDate).toContain(BussinessOwnerFunction.getExpiryDate());
+        await expect(expiryDate).toContain(getExpiryDate());
     }
 
     static async validateRequiredComponentsMsgRemoval(page: Page) {
