@@ -21,12 +21,14 @@ export class JournalEntry {
         await page.locator('.btn_walk').click();
     }
 
-    static async inputDateAdd(page:Page) {
+    static async inputDateAdd(page: Page) {
         let y = 2000;
         const journalDateInput = await page.locator('input[placeholder="Journal Date"]');
         await journalDateInput.clear(); // Clear the input field
-        await journalDateInput.type(`${y}-06-01`, { force: true });
-      }
+        await journalDateInput.click({ clickCount: 3 }); // Click to select all text in the input field
+        await journalDateInput.press('Backspace'); // Clear any existing text
+        await journalDateInput.fill(`${y}-06-01`);
+    }
 
     static async clickCostCenterImg(page) {
         await page.locator('.costCenterImg').last().scrollIntoViewIfNeeded();
@@ -52,6 +54,15 @@ export class JournalEntry {
         await this.chooseCostCenter(page);
         await this.addCostCenterPercentage(page);
         await this.clickSaveCostCenter(page);
+    }
+
+    static async verifyIsRequiedMessage(page: Page, num: number) {
+        const errorMessages = await page.locator('span.errorMessage.ng-star-inserted').count();
+        if (num === 0) {
+            expect(errorMessages).toBe(0);
+        } else {
+            expect(errorMessages).toBe(num);
+        }
     }
 
     static async verifyNumberOfRowsInTable(page: Page, num: number) {
